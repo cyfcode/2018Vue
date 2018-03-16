@@ -1,0 +1,17 @@
+let express = require('express');
+let app = express();
+let ejs = require('ejs');
+let bodyParser = require('body-parser');
+let path = require('path');
+let user = require('./route/users');
+let index = require('./route/index');
+let favicon = require('serve-favicon');
+app.set('view engine','html');
+app.set('View',path.resolve('view'));
+app.use(favicon(path.join(__dirname,'public','favicon.jpg')));
+app.use(express.static(path.resolve('node_modules')));
+app.engine('html',require('ejs').__express);
+app.use(bodyParser.urlencoded({extended:true}));
+app.use('/',index);
+app.use('/user',user);
+app.listen(8060);

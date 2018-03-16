@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+</head>
+<style>
+    [v-cloak]{
+        display: none;
+    }
+</style>
+<body>
+<div id="nav">
+    <nav-component></nav-component>
+    <div class="container">
+        <menu-component></menu-component>
+        <panel-component></panel-component>
+    </div>
+    <div class="list-group">
+        <div class="row">
+            <ul></ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/vue/dist/vue.js"></script>
+<script src="/axios/dist/axios.js"></script>
+<script>
+    Vue.component('nav-component',{
+        template:'<nav class="navbar navbar-inverse">\n' +
+        '            <div class="container-fluid">\n' +
+        '                <div class="navbar-header">\n' +
+        '                    <a class="navbar-brand" href="#">\n' +
+        '                        SpringBud\n' +
+        '                    </a>\n' +
+        '                </div>\n' +
+        '            </div>\n' +
+        '        </nav>',
+    });
+    let menu = {
+      template:'<div class="menu" is="menu-component"><ul class="nav nav-tabs">\n' +
+      '  <li role="presentation" class="active" class="col-md-1"><a href="#">Home</a></li>\n' +
+      '  <li role="presentation" class="col-md-1"><a href="#">Profile</a></li>\n' +
+      '  <li role="presentation" class="col-md-1"><a href="#">Messages</a></li>\n' +
+      '</ul></div>'
+    };
+    let panel = {
+      template:'<div class="panel panel-inverse" is="panel-component">\n' +
+      '  <div class="panel-heading"><h1>Panel heading</h1></div>\n' +
+      '  <div class="panel-body">\n' +
+      '  <ul class="list-group">\n' +
+      '    <li class="list-group-item">apibusibibfa</li @click="change">\n' +
+      '    <li class="list-group-item">Dapus ac cilisis in</li>\n' +
+      '    <li class="list-group-item">Morbi leo risus</li>\n' +
+      '    <li class="list-group-item">Porta ac consectetur ac</li>\n' +
+      '    <li class="list-group-item">Vestibulum at eros</li>\n' +
+      '  </ul>\n' +
+      '  </div>\n' +
+      '<div class="panel-footer"></div>\n'+
+      '</div>'
+    };
+    let nav = new Vue({
+        el:'#nav',
+        components:{
+            'menu-component':menu,
+            'panel-component':panel,
+        },
+        data:{
+            nums:[]
+        },
+        filter:{
+            toFixed(input,param){
+                return '$'+input.toFixed(param);
+            }
+        },
+        methods:{
+            change(){
+
+            },
+        }
+    });
+</script>
+</html>

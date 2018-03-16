@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div id="nav">
+    <div @click="fu">fu capture捕获
+        <div @click.self="zi">子<!--只绑定一次-->
+            <div @click="sun">sun</div><!--.stop阻止事件冒泡-->
+        </div>
+    </div>
+</div>
+</body>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/vue/dist/vue.js"></script>
+<script>
+    Vue.filter('toFixed',(data)=>{
+       return '测试'+data;//所有实例均可调用
+    });
+    export default {
+        name:'title',
+        data(){
+            return{
+              msg:'此账号已过期',
+                guest:[
+                    {
+                        order_id:102,
+                        internet_type:"账号",
+                        age:102
+                    }
+                ]
+            }
+        }
+    }
+    let nav = new Vue({
+        el:'#nav',
+        computed:{
+          get:{
+
+          },set:{
+
+            }
+        },
+        data:{
+            guest:[
+                {
+                    order_id:12,
+                    internet_type:'102',
+                    name_furi:'张',
+                    name_kan:'三',
+                    motel:767677
+                }
+            ]
+        },
+        methods:{
+            fu(){alert('fu')},
+            zi(){alert('zi')},
+            sun(){alert('sun')}
+        },
+        filters:{
+            //自定义过滤器
+        },
+        created:{
+            toFixed(){
+                axios.get('./nums.json').then(res=>{this.nums=res.data},
+                    error=>{console.log(error)}
+                )
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+</head>
+<style>
+    [v-cloak]{
+        display: none;
+    }
+</style>
+<body>
+<div id="nav">
+    <input type="text" v-model="msg" @keyup.enter='add'>
+    <ul>
+        <li v-for="pri in arr">{{pri}}
+            <button>删除</button></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <td>全选<input type="checkbox" v-model="checkall"></td>
+                    <td>名称</td>
+                    <td>单价</td>
+                    <td>数量</td>
+                    <td>总价</td>
+                    <td>操作</td>
+                </tr>
+                <tr v-for="num in nums">
+                    <td><input type="checkbox"
+                               v-model="num.isselect"
+                    ></td>
+                    <td>{{num.name}}</td>
+                    <td>{{num.price}}</td>
+                    <td><input type="number" v-model.number="num.count" min="1"></td>
+                    <td>{{num.price*num.count | toFixed(2)}}</td>
+                    <td><button type="button" @click="remove(num)">删除</button></td>
+                </tr>
+                <tr><td colspan="6">小计:{{sum | toFixed(2)}}</td></tr>
+            </table>
+        </div>
+    </div>
+    <router-link to="./business.html">测试</router-link>
+</div>
+</body>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/vue/dist/vue.js"></script>
+<script src="/axios/dist/axios.js"></script>
+<script>
+    let nav = new Vue({
+        el:'#nav',
+        created(){
+            axios.get('./nums.json').then(res=>{this.nums = res.data},error=>{console.log(error)})
+        },
+        data:{
+            msg:'',
+            arr:[],
+            nums:[
+                {
+                    isselect:true,
+                    name:'书',
+                    price:15,
+                    count:12,
+                    all:''
+                },
+                {
+                    isselect:false,
+                    name:'纸',
+                    price:6,
+                    count:12,
+                    all:''
+                },
+                {
+                    isselect:true,
+                    name:'笔',
+                    price:6,
+                    count:12,
+                    all:''
+                }
+            ]
+        },
+        computed:{//计算
+            checkall:{
+                get(){
+                    return this.nums.every(p=>p.isselect);//默认调取get方法，每个单值都对，总值为真
+                },
+                set(val){
+                    this.nums.forEach(p=>p.isselect=val);//总值影响单值
+                }
+            },
+            sum:{
+                get(){
+                    return this.nums.reduce((prve,next)=>{
+                        if(!next.isselect) return prve;
+                        return prve+next.price*next.count;//计算总值
+                    },0)
+                }
+            }
+        },
+        filters:{
+            toFixed(input,param){
+                return '$'+input.toFixed(param);
+            }
+        },
+        methods:{
+            /*created:{
+              axios.get('./people.json').then(res=>{
+                  this.nums = res.data;
+            },error=>{
+                  console.log(error);
+            })
+            },*/
+            /*checkOne(){
+                this.checkall = this.nums.every(item=>item.isselect);//将其中的一个值赋到总值，单值影响总值
+            },
+            change(){
+                this.nums.forEach(item=>item.isselect=this.checkall);//遍历所有值，总值影响单值
+            },*/
+            add(){
+                this.arr.unshift(this.msg);
+                this.msg = '';
+            },
+            remove(p){
+                this.nums = this.nums.filter(item=>item!==p);//筛选，删除其中单值
+            }
+        }
+    })
+</script>
+</html>

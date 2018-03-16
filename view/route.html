@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+</head>
+<style>
+    [v-cloak]{
+        display: none;
+    }
+</style>
+<body>
+<div class="box">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        ToDoList
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1>
+                        未处理{{count()}}件
+                    </h1>
+                    <input type="text" v-model="val" class="form-control" @keyup.13="add">
+                </div>
+                <div class="panel-body" id="nav">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <input type="checkbox" v-model="checkAll">全选
+                        </li>
+                        <li class="list-group-item" v-for="(num,index) in nums">
+                            <input type="checkbox" v-model="num.checkOne">
+                            <input type="text" v-model="num.dec" class="text-center" readonly>
+                            <button class="btn float-right" @click="remove(index)">删除</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <ul class="nav nav-pills">
+                        <li role="presentation" class="active col-md-1"><a href="#">Home</a></li>
+                        <li role="presentation" class="col-md-1"><a href="#">Profile</a></li>
+                        <li role="presentation" class="col-md-1"><a href="#">Messages</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/vue/dist/vue.js"></script>
+<script src="/axios/dist/axios.js"></script>
+<script>
+    let nav = new Vue({
+        el:'#nav',
+        computed:{
+            checkAll:{
+                get(){
+                    return this.nums.every(item=>item.checkOne);
+                },
+                set(p){
+                    this.nums.forEach(item=>item.checkOne=p)
+                }
+            },
+            count(){
+                return this.nums.filter(item=>item!==this.checkOne).length;
+            }
+        },
+        data:{
+            val:'',
+            nums:[
+                {
+                    checkOne:true,
+                    title:'春芽',
+                    dec:'网络状况',
+                    img:''
+                },
+                {
+                    checkOne:false,
+                    title:'春芽',
+                    dec:'网络状况',
+                    img:''
+                },
+                {
+                    checkOne:true,
+                    title:'春芽',
+                    dec:'网络状况',
+                    img:''
+                },
+                {
+                    checkOne:false,
+                    title:'春芽',
+                    dec:'网络状况',
+                    img:''
+                },
+                {
+                    checkOne:true,
+                    title:'春芽',
+                    dec:'网络状况',
+                    img:''
+                },
+                {
+                    checkOne:false,
+                    title:'春芽',
+                    dec:'网络状况',
+                    img:''
+                },
+                {
+                    checkOne:true,
+                    title:'春芽',
+                    dec:'网络状况',
+                    img:''
+                }
+            ]
+        },
+        methods:{
+            remove(p){
+                this.nums = this.nums.filter((item,index)=>index!==p);
+            },
+            add(){
+                this.nums.push({
+                    checkOne:false,
+                    dec:this.val
+                });
+                this.val=''
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+</head>
+<style>
+    [v-cloak]{
+        display: none;
+    }
+    .x{
+        color: red;
+    }
+    .y{
+        font-size: 50px;
+    }
+</style>
+<body>
+<div id="nav">
+    <input type="checkbox" v-model="checkAll">全选
+    <input type="checkbox" v-for='vn in vns' v-model="vn.check">
+    用户名:<input type="text" v-model="num">{{msg}}
+    <button @click="cut=!cut">切换</button>
+    <template v-if="cut">
+        <label for="">注册</label><input type="text" placeholder="nihao" class="x" :class={x:'se',y:false}>
+    </template>
+    <template v-else>
+        <label for="">登录</label><input type="text">
+    </template>
+    <h1 v-for="(num,index) in 10" :class={x:index%2}>{{num}}</h1>
+    <div :style={backgroundColor:'red'}>buahi</div>
+</div>
+</body>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/vue/dist/vue.js"></script>
+<script src="/axios/dist/axios.js"></script>
+<script>
+    let nav = new Vue({
+        el:'#nav',
+        computed:{//默认调用get方法
+            checkAll:{//checkAll为监控数据源
+                get(){
+                    return this.vns.every(item=>item.check);
+                },
+                set(val){
+                    return this.vns.forEach(item=>item.check = val);
+                }
+            },
+            /*num:{
+                msg(){
+                    if(this.num.length>3){
+                        return 'zifu'
+                    }
+                    if (this.num.length<6){
+                        return '字符太少！'
+                    }
+                }
+            }*/
+        },
+        watch:{//监控数据变化，异步
+          num(newVal,oldVal){
+              if(newVal.length>3){
+                  this.msg='taiduo'
+              }
+          }
+        },
+        data:{
+            se:true,
+            cut:true,
+            num:'',
+            msg:'',
+            vns:[
+                {
+                    check:true
+                },
+                {
+                    check:false
+                },
+                {
+                    check:true
+                }]
+        }
+    })
+</script>
+</html>

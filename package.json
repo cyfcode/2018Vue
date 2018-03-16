@@ -1,0 +1,26 @@
+{
+  "name": "2018vue",
+  "version": "1.0.0",
+  "description": "1.for,foreach,map,filter,some,every\r 2.arr.forEach循环(工程式，不关心如何实现)\r 3.for in 循环 for(let key in arr) 中key会变为字符串类型，数组私有属性也会打印出来\r 4.for循环\r 5.for of 不能遍历对象\r 6.3<num<8  错误，3<num为布尔类型，所有值为真\r 7.map不操作原数组 常用于更新\r 8.filter常用于删除\r 9.find函数，查找字符串中的值,找到具体的某一项\r 10.some 找到true返回true，找不到返回false\r 11.every 找到false返回false    /.数组方法一般都会迭代\r 12.reduce **难点**\r 13.更改this指向\r 13.1 call bind apply\r 13.2闭包：当执行完毕销毁       当执行完毕后不销毁\r 14.框架()\r 15.库（jquery,underscore)\r 16.vue-router\r 17.webpack",
+  "main": "foreach.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "animate.css": "^3.6.1",
+    "axios": "^0.18.0",
+    "bootstrap": "^4.0.0",
+    "bootstrap-vue": "^2.0.0-rc.1",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
+    "path": "^0.12.7",
+    "serve-favicon": "^2.4.5",
+    "vue": "^2.5.13",
+    "vue-router": "^3.0.1"
+  }
+}

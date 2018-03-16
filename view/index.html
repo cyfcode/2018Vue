@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/animate.css/animate.css">
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+        .cf-enter{
+            transition: opacity 2s;
+        }
+        .cf-enter-to{
+            transition: opacity 1s;
+            color: red;
+        }
+        .cf-leave{
+            transition: opacity 0s;
+        }
+        .cf-leave-to{
+            transition: opacity 5s;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="panel panel-default" v-cloak>
+    <div class="panel-heading">Panel heading</div>
+</div>
+<div id="vm">
+    <input type="text" v-model="contrast">
+    <transition name='cf' class="fadeInRightBig">
+        <div v-show="flag">显示/影藏</div>
+    </transition>
+    <button @click="flag=!flag">切换</button>
+    <input type="text" v-model="val" @keyup.enter="add">
+    <ul>
+        <li v-for="(per,index) in people">{{per}}
+            <button @click="remove(index)">删除</button>
+        </li>
+    </ul>
+    <signin>
+
+    </signin>
+    <table class="table"  border="1">
+        <tr v-once="">
+            <td>客户编号</td>
+            <td>名称</td>
+            <td>电话</td>
+            <td>申请网络类型</td>
+            <td>开通时间</td>
+            <td>操作</td>
+        </tr>
+        <tr v-for="va in vas">
+            <td>{{va}}</td>
+            <td>{{va}}</td>
+            <td>{{va}}</td>
+            <td>{{new Date().toLocaleString()}}</td>
+        </tr>
+    </table>
+</div>
+</body>
+<script src="/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/vue/dist/vue.js"></script>
+<script src='/vue-router/dist/vue-router.js'></script>
+<script>
+    let home = {
+        template:'<div>首页</div>'
+    };
+    let lis = {
+        template:'<div>list</div>'
+    };
+    Vue.component('signin',{
+        templates:'<div>zhiang</div>'
+    });
+    let vm = new Vue({
+        el:'#vm',
+        component:{
+            signin:'<h1>个人中心</h1>'
+        },
+        methods:{
+            add(e){
+                if(e.keyCode===13){
+                    this.people.unshift(this.val);
+                    this.val = '';
+                }
+            },
+            remove(i){
+                this.people = this.people.filter((item,index)=>index!==i);
+            },
+            reset(){
+                this.people = this.people.every(function (item) {
+                    return this.age()&&this.code();
+                })
+            }
+        },
+        data:{
+            people:[],
+            val:'',
+            vas:{
+                name:'zhang',
+                code:'1223',
+                phone:12345,
+                date:354,
+                name_furi:''
+            },
+            flag:true,
+            contrast:'',
+            num:[1,2,3,4]
+        },
+        computed:{
+
+        }
+    });
+</script>
+</html>
